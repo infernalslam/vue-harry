@@ -63,7 +63,9 @@ export default {
           price: item.price
         }
       })
+      console.log(items)
       while (items.length > 1) {
+        items = items.filter(item => item.amount !== 0)
         var sumPrice = items.reduce((sum, item) => sum + item.price, 0)
         discount += ((items.length - 1) / 10) * sumPrice
         items = items.map(item => {
