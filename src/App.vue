@@ -12,14 +12,17 @@
       </div>
        <div class="col-xs-6">
         <div v-for="show in storeList">
-          {{show.id}} : {{show.name}} {{show.price}} x {{show.amount}} = {{show.price * show.amount}}
+          {{show.id}} : {{show.name}} {{show.price}} x 
+          <button @click="addBook(show.id, show.name, show.price)">^</button> {{show.amount}} <button @click="subBook(show.id, show.name, show.price)">v</button> 
+          	= {{show.price * show.amount}}
+      	   <button @click="delStore(show.id)">X</button>
           <hr>
         </div>
       </div>
       <div class="col-xs-4">
           จ่ายเงินทั้งหมด :     {{ totalPrice() }}   <br>
           ส่วนลด :        {{ discount() }}         <br>
-          ชำระเงิน :
+          ชำระเงิน :     {{ totalPrice() - discount() }}
       </div>
     </div>
    </div>
@@ -72,6 +75,16 @@ export default {
         items = items.filter(item => item.amount !== 0)
       }
       return discount
+    },
+    delStore: function (id) {
+      console.log(id)
+      var index = this.storeList.findIndex(item => item.id === id)
+      this.storeList.splice(index, 1)
+    },
+    subBook: function (id, name, price) {
+      console.log(id, name, price)
+      var index = this.storeList.findIndex(item => item.id === id)
+      this.storeList[index].amount -= 1
     }
   }
 }
